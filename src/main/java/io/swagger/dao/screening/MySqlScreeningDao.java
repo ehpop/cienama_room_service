@@ -1,4 +1,4 @@
-package io.swagger.dao.Screening;
+package io.swagger.dao.screening;
 
 import io.swagger.model.Screening;
 import org.springframework.jdbc.core.JdbcTemplate;

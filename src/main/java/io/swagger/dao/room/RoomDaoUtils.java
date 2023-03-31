@@ -1,4 +1,4 @@
-package io.swagger.dao.Room;
+package io.swagger.dao.room;
 
 import io.swagger.model.Room;
 
