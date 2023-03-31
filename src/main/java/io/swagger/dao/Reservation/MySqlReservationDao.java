@@ -1,4 +1,4 @@
-package io.swagger.DAO.Reservation;
+package io.swagger.dao.Reservation;
 
 import io.swagger.model.Reservation;
 import org.springframework.jdbc.core.JdbcTemplate;

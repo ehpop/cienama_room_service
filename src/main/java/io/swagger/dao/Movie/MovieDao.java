@@ -1,4 +1,4 @@
-package io.swagger.DAO.Movie;
+package io.swagger.dao.Movie;
 
 import io.swagger.model.Movie;
 

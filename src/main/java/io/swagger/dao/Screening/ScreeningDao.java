@@ -1,4 +1,4 @@
-package io.swagger.DAO.Screening;
+package io.swagger.dao.Screening;
 
 import io.swagger.model.Screening;
 

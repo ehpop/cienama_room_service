@@ -1,4 +1,4 @@
-package io.swagger.DAO.Room;
+package io.swagger.dao.Room;
 
 import io.swagger.model.Room;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -26,7 +26,7 @@ public class MySqlRoomDao implements RoomDao {
 
     @Override
     public Integer addRoom(Room room) {
-        String query = "INSERT INTO " + roomsTableName + " (name, capacity) VALUES(?, ?)";
+        /*String query = "INSERT INTO " + roomsTableName + " (name, capacity) VALUES(?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         int rowsAffected = jdbcTemplate.update(connection -> {
@@ -41,7 +41,8 @@ public class MySqlRoomDao implements RoomDao {
         addListOfMovieToRoom(room.getId(), room.getIdsOfMoviesInRoom());
         addListOfSeatsToRoom(room.getId(), room.getIdsOfSeatsInRoom());
 
-        return room.getId();
+        return room.getId();*/
+        return null;
     }
 
     @Override
@@ -56,7 +57,7 @@ public class MySqlRoomDao implements RoomDao {
 
     @Override
     public ArrayList<Room> getAllRooms() {
-        String query = "SELECT * FROM " + roomsTableName;
+        /*String query = "SELECT * FROM " + roomsTableName;
 
         List<Room> rooms = jdbcTemplate.query(query, RoomDaoUtils::mapToRoom);
 
@@ -79,7 +80,8 @@ public class MySqlRoomDao implements RoomDao {
             });
 
             room.setMovies(movieIds);
-        }
+        }*/
+        return null;
     }
 
     @Override
