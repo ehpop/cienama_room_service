@@ -115,7 +115,6 @@ public class Room   {
     this.movies = movies;
   }
 
-
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {

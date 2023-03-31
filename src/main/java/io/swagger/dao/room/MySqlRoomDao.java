@@ -1,14 +1,19 @@
 package io.swagger.dao.room;
 
 import io.swagger.model.Room;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MySqlRoomDao implements RoomDao {
 
@@ -32,10 +37,9 @@ public class MySqlRoomDao implements RoomDao {
             return ps;
         }, keyHolder);
 
-//        room.setId(Objects.requireNonNull(keyHolder.getKey()).intValue());
-//
-//        addListOfMovieToRoom(room.getId(), room.getIdsOfMoviesInRoom());
-//        addListOfSeatsToRoom(room.getId(), room.getIdsOfSeatsInRoom());
+        room.setId(Objects.requireNonNull(keyHolder.getKey()).intValue());
+
+        addListOfMovieToRoom(room.getId(), room.getMovies());
 
         return room.getId();
     }
@@ -52,31 +56,21 @@ public class MySqlRoomDao implements RoomDao {
 
     @Override
     public ArrayList<Room> getAllRooms() {
-        /*String query = "SELECT * FROM " + roomsTableName;
+        String query = "SELECT * FROM " + roomsTableName;
 
         List<Room> rooms = jdbcTemplate.query(query, RoomDaoUtils::mapToRoom);
 
         //!TODO: replace with app.settings
-        String queryMovieId = "SELECT movie_id FROM" + "room_movies" + " WHERE room_id = ?";
-        String querySeatId = "SELECT seat_id FROM" + "room_seat" + " WHERE room_id = ?";
+        String queryMovieId = "SELECT movie_id FROM " + "room_movies" + " WHERE room_id = ?";
         for (Room room : rooms) {
             Integer roomId = room.getId();
-            List<Integer> movieIds = jdbcTemplate.query(queryMovieId, new Object[]{roomId}, new RowMapper<Integer>() {
-                @Override
-                public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    return rs.getInt("movie_id");
-                }
-            });
-            List<Integer> seatIds = jdbcTemplate.query(querySeatId, new Object[]{roomId}, new RowMapper<Integer>() {
-                @Override
-                public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    return rs.getInt("seat_id");
-                }
-            });
-
+            List<Integer> movieIds = jdbcTemplate.query(queryMovieId, ps -> {
+                ps.setInt(1, roomId);
+            }, (rs, rowNum) -> rs.getInt("movie_id"));
             room.setMovies(movieIds);
-        }*/
-        return null;
+        }
+
+        return (ArrayList<Room>) rooms;
     }
 
     @Override
@@ -99,23 +93,8 @@ public class MySqlRoomDao implements RoomDao {
             }, keyHolder);
         }
 
+
         return rowsAffected > 0;
     }
 
-    private boolean addListOfSeatsToRoom(Integer roomId, List<Integer> seatsId) {
-        //! TODO add var to app.settings
-        String query = "INSERT INTO " + "room_seats" + " (room_id, seat_id) VALUES(?, ?)";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        int rowsAffected = 0;
-        for (Integer seatId : seatsId) {
-            rowsAffected += jdbcTemplate.update(con -> {
-                PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, roomId);
-                ps.setInt(2, seatId);
-
-                return ps;
-            }, keyHolder);
-        }
-        return rowsAffected > 0;
-    }
 }
