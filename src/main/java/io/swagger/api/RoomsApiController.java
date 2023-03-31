@@ -32,7 +32,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-03-31T17:46:47.268366723Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-03-31T21:52:24.625697542Z[GMT]")
 @RestController
 public class RoomsApiController implements RoomsApi {
 
@@ -52,7 +52,7 @@ public class RoomsApiController implements RoomsApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<List<Room>>(objectMapper.readValue("[ {\n  \"movies\" : [ 1, 1 ],\n  \"name\" : \"name\",\n  \"id\" : 0,\n  \"seats\" : [ 5, 5 ],\n  \"capacity\" : 6\n}, {\n  \"movies\" : [ 1, 1 ],\n  \"name\" : \"name\",\n  \"id\" : 0,\n  \"seats\" : [ 5, 5 ],\n  \"capacity\" : 6\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<List<Room>>(objectMapper.readValue("[ {\n  \"movies\" : [ 1, 1 ],\n  \"name\" : \"name\",\n  \"id\" : 0,\n  \"capacity\" : 6\n}, {\n  \"movies\" : [ 1, 1 ],\n  \"name\" : \"name\",\n  \"id\" : 0,\n  \"capacity\" : 6\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<List<Room>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -73,7 +73,7 @@ public class RoomsApiController implements RoomsApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Room>(objectMapper.readValue("{\n  \"movies\" : [ 1, 1 ],\n  \"name\" : \"name\",\n  \"id\" : 0,\n  \"seats\" : [ 5, 5 ],\n  \"capacity\" : 6\n}", Room.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<Room>(objectMapper.readValue("{\n  \"movies\" : [ 1, 1 ],\n  \"name\" : \"name\",\n  \"id\" : 0,\n  \"capacity\" : 6\n}", Room.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<Room>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -88,7 +88,7 @@ public class RoomsApiController implements RoomsApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Room>(objectMapper.readValue("{\n  \"movies\" : [ 1, 1 ],\n  \"name\" : \"name\",\n  \"id\" : 0,\n  \"seats\" : [ 5, 5 ],\n  \"capacity\" : 6\n}", Room.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<Room>(objectMapper.readValue("{\n  \"movies\" : [ 1, 1 ],\n  \"name\" : \"name\",\n  \"id\" : 0,\n  \"capacity\" : 6\n}", Room.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<Room>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -102,7 +102,7 @@ public class RoomsApiController implements RoomsApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Room>(objectMapper.readValue("{\n  \"movies\" : [ 1, 1 ],\n  \"name\" : \"name\",\n  \"id\" : 0,\n  \"seats\" : [ 5, 5 ],\n  \"capacity\" : 6\n}", Room.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<Room>(objectMapper.readValue("{\n  \"movies\" : [ 1, 1 ],\n  \"name\" : \"name\",\n  \"id\" : 0,\n  \"capacity\" : 6\n}", Room.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<Room>(HttpStatus.INTERNAL_SERVER_ERROR);

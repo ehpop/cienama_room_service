@@ -22,7 +22,7 @@ public class MySqlRoomDao implements RoomDao {
 
     @Override
     public Integer addRoom(Room room) {
-        /*String query = "INSERT INTO " + roomsTableName + " (name, capacity) VALUES(?, ?)";
+        String query = "INSERT INTO " + roomsTableName + " (name, capacity) VALUES(?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         int rowsAffected = jdbcTemplate.update(connection -> {
@@ -32,13 +32,12 @@ public class MySqlRoomDao implements RoomDao {
             return ps;
         }, keyHolder);
 
-        room.setId(Objects.requireNonNull(keyHolder.getKey()).intValue());
+//        room.setId(Objects.requireNonNull(keyHolder.getKey()).intValue());
+//
+//        addListOfMovieToRoom(room.getId(), room.getIdsOfMoviesInRoom());
+//        addListOfSeatsToRoom(room.getId(), room.getIdsOfSeatsInRoom());
 
-        addListOfMovieToRoom(room.getId(), room.getIdsOfMoviesInRoom());
-        addListOfSeatsToRoom(room.getId(), room.getIdsOfSeatsInRoom());
-
-        return room.getId();*/
-        return null;
+        return room.getId();
     }
 
     @Override
