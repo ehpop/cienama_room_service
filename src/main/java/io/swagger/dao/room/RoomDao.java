@@ -9,7 +9,7 @@ public interface RoomDao {
 
     public Room getRoomById(Integer id);
 
-    public boolean deletedRoomById(Integer id);
+    public boolean deleteRoomById(Integer id);
 
     public ArrayList<Room> getAllRooms();
 

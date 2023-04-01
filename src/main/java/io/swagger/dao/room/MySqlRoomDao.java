@@ -2,6 +2,7 @@ package io.swagger.dao.room;
 
 import io.swagger.model.Room;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -27,13 +28,14 @@ public class MySqlRoomDao implements RoomDao {
 
     @Override
     public Integer addRoom(Room room) {
-        String query = "INSERT INTO " + roomsTableName + " (name, capacity) VALUES(?, ?)";
+        String query = "INSERT INTO " + roomsTableName + " (name, capacity, `rows`) VALUES(?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, room.getName());
             ps.setInt(2, room.getCapacity());
+            ps.setInt(3, room.getRows());
             return ps;
         }, keyHolder);
 
@@ -50,8 +52,20 @@ public class MySqlRoomDao implements RoomDao {
     }
 
     @Override
-    public boolean deletedRoomById(Integer id) {
-        return false;
+    public boolean deleteRoomById(Integer id) {
+        int rowsAffected = 0;
+
+        String query = "DELETE FROM " + "room_movies" + " WHERE room_id = " + id;
+        jdbcTemplate.update(query);
+
+        query = "DELETE FROM " + roomsTableName + " WHERE id = " + id;
+        try {
+            rowsAffected = jdbcTemplate.update(query);
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+
+        return rowsAffected > 0;
     }
 
     @Override

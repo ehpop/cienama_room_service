@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * Room
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-03-31T21:52:24.625697542Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-04-01T09:19:04.215466341Z[GMT]")
 
 
 public class Room   {
@@ -26,6 +26,9 @@ public class Room   {
 
   @JsonProperty("capacity")
   private Integer capacity = null;
+
+  @JsonProperty("rows")
+  private Integer rows = null;
 
   @JsonProperty("movies")
   @Valid
@@ -88,6 +91,25 @@ public class Room   {
     this.capacity = capacity;
   }
 
+  public Room rows(Integer rows) {
+    this.rows = rows;
+    return this;
+  }
+
+  /**
+   * Number of rows available in room
+   * @return rows
+   **/
+  @Schema(description = "Number of rows available in room")
+  
+    public Integer getRows() {
+    return rows;
+  }
+
+  public void setRows(Integer rows) {
+    this.rows = rows;
+  }
+
   public Room movies(List<Integer> movies) {
     this.movies = movies;
     return this;
@@ -115,6 +137,7 @@ public class Room   {
     this.movies = movies;
   }
 
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -127,12 +150,13 @@ public class Room   {
     return Objects.equals(this.id, room.id) &&
         Objects.equals(this.name, room.name) &&
         Objects.equals(this.capacity, room.capacity) &&
+        Objects.equals(this.rows, room.rows) &&
         Objects.equals(this.movies, room.movies);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, capacity, movies);
+    return Objects.hash(id, name, capacity, rows, movies);
   }
 
   @Override
@@ -143,6 +167,7 @@ public class Room   {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    capacity: ").append(toIndentedString(capacity)).append("\n");
+    sb.append("    rows: ").append(toIndentedString(rows)).append("\n");
     sb.append("    movies: ").append(toIndentedString(movies)).append("\n");
     sb.append("}");
     return sb.toString();

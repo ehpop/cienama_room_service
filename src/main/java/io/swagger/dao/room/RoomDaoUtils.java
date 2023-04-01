@@ -13,6 +13,7 @@ public class RoomDaoUtils {
         room.setId(id);
         room.setCapacity(resultSet.getInt("capacity"));
         room.setName(resultSet.getString("name"));
+        room.setRows(resultSet.getInt("rows"));
         room.setMovies(new ArrayList<>());
 
         return room;
