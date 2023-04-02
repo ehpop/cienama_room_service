@@ -1,7 +1,9 @@
 package io.swagger.configuration;
 
 import io.swagger.dao.movie.MySqlMovieDao;
+import io.swagger.dao.reservation.MySqlReservationDao;
 import io.swagger.dao.room.MySqlRoomDao;
+import io.swagger.dao.screening.MySqlScreeningDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +34,12 @@ public class DaoConfig {
     @Value("${spring.datasource.room_movies_table_name}")
     private String roomMoviesTableName;
 
+    @Value("${spring.datasource.screenings_table_name}")
+    private String screeningsTableName;
+
+    @Value("${spring.datasource.reservations_table_name}")
+    private String reservationsTableName;
+
     @Bean
     public JdbcTemplate jdbcTemplate(){
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
@@ -55,5 +63,19 @@ public class DaoConfig {
     public MySqlRoomDao roomDao(JdbcTemplate jdbcTemplate){
         return new MySqlRoomDao(jdbcTemplate, roomsTableName, roomMoviesTableName);
     }
+
+    @Autowired
+    @Bean
+    public MySqlReservationDao reservationDao(JdbcTemplate jdbcTemplate){
+        return new MySqlReservationDao(jdbcTemplate, reservationsTableName);
+    }
+
+    @Autowired
+    @Bean
+    public MySqlScreeningDao screeningDao(JdbcTemplate jdbcTemplate){
+        return new MySqlScreeningDao(jdbcTemplate, screeningsTableName);
+    }
+
+
 }
 
