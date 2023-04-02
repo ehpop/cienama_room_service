@@ -2,13 +2,18 @@ package io.swagger.dao.reservation;
 
 import io.swagger.model.Reservation;
 import io.swagger.model.Screening;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class MySqlReservationDao implements ReservationDao{
@@ -42,7 +47,19 @@ public class MySqlReservationDao implements ReservationDao{
 
     @Override
     public Reservation getReservationById(Integer id) {
-        return null;
+        String query = "SELECT * FROM " + reservationsTableName + " WHERE id = " + id;
+        List<Reservation> reservation;
+
+        try {
+            reservation = jdbcTemplate.query(query, ReservationsDaoUtils::mapToReservation);
+            if (reservation.size() == 0) {
+                throw new EmptyResultDataAccessException(1);
+            }
+        } catch (DataAccessException e) {
+            throw new EmptyResultDataAccessException(1);
+        }
+
+        return reservation.get(0);
     }
 
     @Override

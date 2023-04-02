@@ -1,6 +1,7 @@
 package io.swagger.dao.movie;
 
 import io.swagger.model.Movie;
+import io.swagger.model.Reservation;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -46,14 +47,10 @@ public class MySqlMovieDao implements MovieDao {
     public Movie getMovieById(Integer id) {
         String query = "SELECT * FROM " + moviesTableName + " WHERE id = " + id;
 
-        Movie movie;
-        try {
-            movie = jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Movie.class));
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
+        return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(){
+            Reservation reservation = new Reservation();
 
-        return movie;
+        });
     }
 
     @Override

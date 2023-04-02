@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,17 +61,13 @@ public class ReservationsApiController implements ReservationsApi {
     }
 
     public ResponseEntity<Reservation> reservationsIdGet(@Parameter(in = ParameterIn.PATH, description = "ID of the reservation to retrieve", required=true, schema=@Schema()) @PathVariable("id") Integer id) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Reservation>(objectMapper.readValue("{\n  \"seat\" : 1,\n  \"date\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"screeningInfo\" : 6,\n  \"id\" : 0,\n  \"customerName\" : \"customerName\"\n}", Reservation.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Reservation>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+        try {
+            Reservation reservation = reservationDao.getReservationById(id);
+            return new ResponseEntity<>(reservation, HttpStatus.OK);
+        } catch (EmptyResultDataAccessException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<Reservation>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Reservation> reservationsIdPut(@Parameter(in = ParameterIn.PATH, description = "ID of the reservation to update", required=true, schema=@Schema()) @PathVariable("id") Integer id,@Parameter(in = ParameterIn.DEFAULT, description = "Reservation object to update", required=true, schema=@Schema()) @Valid @RequestBody Reservation body) {
