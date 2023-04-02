@@ -1,7 +1,6 @@
 package io.swagger.dao.room;
 
 import io.swagger.model.Room;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -20,10 +19,12 @@ public class MySqlRoomDao implements RoomDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final String roomsTableName;
+    private final String roomMoviesTableName;
 
-    public MySqlRoomDao(JdbcTemplate jdbcTemplate, String roomsTableName) {
+    public MySqlRoomDao(JdbcTemplate jdbcTemplate, String roomsTableName, String roomMoviesTableName) {
         this.jdbcTemplate = jdbcTemplate;
         this.roomsTableName = roomsTableName;
+        this.roomMoviesTableName = roomMoviesTableName;
     }
 
     @Override
@@ -48,7 +49,19 @@ public class MySqlRoomDao implements RoomDao {
 
     @Override
     public Room getRoomById(Integer id) {
-        return null;
+        String query = "SELECT * FROM " + roomsTableName + " WHERE id = " + id;
+        Room room = jdbcTemplate.queryForObject(query, RoomDaoUtils::mapToRoom);
+
+        if (room != null) {
+            //!TODO: replace with app.settings
+            query = "SELECT movie_id FROM " + "room_movies" + " WHERE room_id = " + id;
+            List<Integer> moviesIds = jdbcTemplate.query(query, (rs, rowNum) -> rs.getInt("movie_id"));
+
+            room.setMovies(moviesIds);
+            room.setId(id);
+        }
+
+        return room;
     }
 
     @Override
@@ -69,27 +82,54 @@ public class MySqlRoomDao implements RoomDao {
     }
 
     @Override
-    public ArrayList<Room> getAllRooms() {
+    public List<Room> getAllRooms() {
         String query = "SELECT * FROM " + roomsTableName;
 
-        List<Room> rooms = jdbcTemplate.query(query, RoomDaoUtils::mapToRoom);
+        List<Room> rooms = jdbcTemplate.query(query, RoomDaoUtils::mapRooms);
 
         //!TODO: replace with app.settings
         String queryMovieId = "SELECT movie_id FROM " + "room_movies" + " WHERE room_id = ?";
+        assert rooms != null;
         for (Room room : rooms) {
             Integer roomId = room.getId();
-            List<Integer> movieIds = jdbcTemplate.query(queryMovieId, ps -> {
+            List<Integer> moviesIds = jdbcTemplate.query(queryMovieId, ps -> {
                 ps.setInt(1, roomId);
             }, (rs, rowNum) -> rs.getInt("movie_id"));
-            room.setMovies(movieIds);
+            room.setMovies(moviesIds);
         }
 
-        return (ArrayList<Room>) rooms;
+        return rooms;
     }
 
     @Override
-    public boolean updateRoomById(Integer id) {
-        return false;
+    public boolean updateRoomById(Room room, Integer id) {
+        int rowsAffected = 0;
+        rowsAffected += updateRoom(room, id);
+        rowsAffected += updateRoomMovies(room, id);
+
+        room.setId(id);
+
+        return rowsAffected > 0;
+    }
+
+    private int updateRoom(Room room, Integer id) {
+        String query = "UPDATE " + roomsTableName + " SET name = ?, capacity = ?, `rows` = ? WHERE id = " + id;
+
+        return jdbcTemplate.update(query, room.getName(), room.getCapacity(), room.getRows());
+    }
+
+    private int updateRoomMovies(Room room, Integer roomId) {
+        int rowsAffected = 0;
+
+        String deleteQuery = "DELETE FROM " + roomMoviesTableName + " WHERE room_id = ?";
+        rowsAffected += jdbcTemplate.update(deleteQuery, roomId);
+
+        String insertQuery = "INSERT INTO " + roomMoviesTableName + " (room_id, movie_id) VALUES (?, ?)";
+        for (Integer movieId : room.getMovies()) {
+            rowsAffected += jdbcTemplate.update(insertQuery, roomId, movieId);
+        }
+
+        return rowsAffected;
     }
 
     private boolean addListOfMovieToRoom(Integer roomId, List<Integer> moviesId) {

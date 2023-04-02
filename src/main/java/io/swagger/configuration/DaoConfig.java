@@ -29,6 +29,8 @@ public class DaoConfig {
     @Value("${spring.datasource.rooms_table_name}")
     private String roomsTableName;
 
+    @Value("${spring.datasource.room_movies_table_name}")
+    private String roomMoviesTableName;
 
     @Bean
     public JdbcTemplate jdbcTemplate(){
@@ -51,7 +53,7 @@ public class DaoConfig {
     @Autowired
     @Bean
     public MySqlRoomDao roomDao(JdbcTemplate jdbcTemplate){
-        return new MySqlRoomDao(jdbcTemplate, roomsTableName);
+        return new MySqlRoomDao(jdbcTemplate, roomsTableName, roomMoviesTableName);
     }
 }
 
