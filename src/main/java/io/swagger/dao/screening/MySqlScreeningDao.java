@@ -6,10 +6,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class MySqlScreeningDao implements ScreeningDao{
@@ -67,8 +66,10 @@ public class MySqlScreeningDao implements ScreeningDao{
     }
 
     @Override
-    public ArrayList<Screening> getAllScreenings() {
-        return null;
+    public List<Screening> getAllScreenings() {
+        String query = "Select * from " + screeningTableName;
+
+        return jdbcTemplate.query(query, ScreeningDaoUtils::mapScreenings);
     }
 
     @Override

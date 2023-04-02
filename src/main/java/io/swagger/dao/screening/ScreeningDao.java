@@ -2,7 +2,7 @@ package io.swagger.dao.screening;
 
 import io.swagger.model.Screening;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ScreeningDao {
     public Integer addScreening(Screening screening);
@@ -11,7 +11,7 @@ public interface ScreeningDao {
 
     public boolean deleteScreeningById(Integer id);
 
-    public ArrayList<Screening> getAllScreenings();
+    public List<Screening> getAllScreenings();
 
     public boolean updateScreeningById(Integer id);
 }
