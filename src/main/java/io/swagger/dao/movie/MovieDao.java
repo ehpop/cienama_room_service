@@ -14,4 +14,6 @@ public interface MovieDao {
     public ArrayList<Movie> getAllMovies();
 
     public boolean updateMovieById(Movie movie, Integer id);
+
+    boolean checkIfMovieExist(Integer id);
 }

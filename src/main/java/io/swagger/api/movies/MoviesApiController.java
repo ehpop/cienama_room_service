@@ -1,7 +1,7 @@
 package io.swagger.api.movies;
 
 import io.swagger.dao.movie.MovieDao;
-import io.swagger.dao.movie.MySqlMovieDao;
+import io.swagger.dao.reservation.ReservationDao;
 import io.swagger.model.Movie;
 import io.swagger.model.Reservation;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,12 +35,14 @@ public class MoviesApiController implements MoviesApi {
     private final HttpServletRequest request;
 
     private final MovieDao movieDao;
+    private final ReservationDao reservationDao;
 
     @Autowired
-    public MoviesApiController(ObjectMapper objectMapper, HttpServletRequest request, MovieDao movieDao) {
+    public MoviesApiController(ObjectMapper objectMapper, HttpServletRequest request, MovieDao movieDao, ReservationDao reservationDao) {
         this.objectMapper = objectMapper;
         this.request = request;
         this.movieDao = movieDao;
+        this.reservationDao = reservationDao;
     }
 
     @Override
@@ -91,8 +93,16 @@ public class MoviesApiController implements MoviesApi {
     //! TODO
     @Override
     public ResponseEntity<Void> moviesIdReservePost(@Parameter(in = ParameterIn.PATH, description = "ID of the movie to reserve", required = true, schema = @Schema()) @PathVariable("id") Integer id, @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid @RequestBody Reservation body) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        if (movieDao.checkIfMovieExist(id)) {
+            try {
+                reservationDao.addReservation(body);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            } catch (DataAccessException e) {
+                log.error(e.getMessage());
+            }
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Override

@@ -13,5 +13,5 @@ public interface ReservationDao {
 
     public ArrayList<Reservation> getAllReservations();
 
-    public boolean updateReservationById(Integer id);
+    public boolean updateReservationById(Reservation reservation, Integer id);
 }

@@ -87,4 +87,18 @@ public class MySqlMovieDao implements MovieDao {
         return rowsAffected == 1;
     }
 
+    @Override
+    public boolean checkIfMovieExist(Integer id) {
+        String query = "SELECT 1 FROM " + moviesTableName + " WHERE ID = " + id;
+
+        Integer result;
+        try {
+            result = jdbcTemplate.queryForObject(query, Integer.class);
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+
+        return result != null && result == 1;
+    }
+
 }
