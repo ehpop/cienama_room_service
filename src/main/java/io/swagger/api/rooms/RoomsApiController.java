@@ -1,4 +1,4 @@
-package io.swagger.api;
+package io.swagger.api.rooms;
 
 import io.swagger.dao.room.RoomDao;
 import io.swagger.model.Room;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-04-01T09:19:04.215466341Z[GMT]")

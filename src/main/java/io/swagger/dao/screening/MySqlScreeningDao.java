@@ -41,7 +41,14 @@ public class MySqlScreeningDao implements ScreeningDao{
 
     @Override
     public Screening getScreeningById(Integer id) {
-        return null;
+        String query = "SELECT * FROM " + screeningTableName + " WHERE id = " + id;
+        Screening screening = jdbcTemplate.queryForObject(query, ScreeningDaoUtils::mapToScreening);
+
+        if (screening != null) {
+            screening.setId(id);
+        }
+
+        return screening;
     }
 
     @Override

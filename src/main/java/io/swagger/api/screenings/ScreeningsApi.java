@@ -3,7 +3,7 @@
  * https://github.com/swagger-api/swagger-codegen
  * Do not edit the class manually.
  */
-package io.swagger.api;
+package io.swagger.api.screenings;
 
 import io.swagger.model.Screening;
 import io.swagger.v3.oas.annotations.Operation;

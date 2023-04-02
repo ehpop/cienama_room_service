@@ -1,6 +1,7 @@
-package io.swagger.api;
+package io.swagger.api.screenings;
 
 import io.swagger.dao.screening.ScreeningDao;
+import io.swagger.dao.screening.ScreeningDaoUtils;
 import io.swagger.model.Screening;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -53,12 +54,26 @@ public class ScreeningsApiController implements ScreeningsApi {
         return new ResponseEntity<List<Screening>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Void> screeningsIdDelete(@Parameter(in = ParameterIn.PATH, description = "ID of the screening to delete", required=true, schema=@Schema()) @PathVariable("id") Integer id) {
+    public ResponseEntity<Void> screeningsIdDelete(@Parameter(in = ParameterIn.PATH, description = "ID of the screening to delete", required = true, schema = @Schema()) @PathVariable("id") Integer id) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Screening> screeningsIdGet(@Parameter(in = ParameterIn.PATH, description = "ID of the screening to retrieve", required=true, schema=@Schema()) @PathVariable("id") Integer id) {
+    public ResponseEntity<Screening> screeningsIdGet(@Parameter(in = ParameterIn.PATH, description = "ID of the screening to retrieve", required = true, schema = @Schema()) @PathVariable("id") Integer id) {
+        try {
+            Screening screening = screeningDao.getScreeningById(id);
+            if (screening != null) {
+                return new ResponseEntity<>(screening, HttpStatus.OK);
+            }
+
+        } catch (DataAccessException e) {
+            log.error(e.getMessage());
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<Screening> screeningsIdPut(@Parameter(in = ParameterIn.PATH, description = "ID of the screening to update", required = true, schema = @Schema()) @PathVariable("id") Integer id, @Parameter(in = ParameterIn.DEFAULT, description = "Screening object to update", required = true, schema = @Schema()) @Valid @RequestBody Screening body) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -72,21 +87,7 @@ public class ScreeningsApiController implements ScreeningsApi {
         return new ResponseEntity<Screening>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Screening> screeningsIdPut(@Parameter(in = ParameterIn.PATH, description = "ID of the screening to update", required=true, schema=@Schema()) @PathVariable("id") Integer id,@Parameter(in = ParameterIn.DEFAULT, description = "Screening object to update", required=true, schema=@Schema()) @Valid @RequestBody Screening body) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Screening>(objectMapper.readValue("{\n  \"movie\" : 6,\n  \"startTime\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"id\" : 0,\n  \"endTime\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"room\" : 1\n}", Screening.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Screening>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<Screening>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    public ResponseEntity<Screening> screeningsPost(@Parameter(in = ParameterIn.DEFAULT, description = "Screening object to be created", required=true, schema=@Schema()) @Valid @RequestBody Screening body) {
+    public ResponseEntity<Screening> screeningsPost(@Parameter(in = ParameterIn.DEFAULT, description = "Screening object to be created", required = true, schema = @Schema()) @Valid @RequestBody Screening body) {
         try {
             screeningDao.addScreening(body);
 

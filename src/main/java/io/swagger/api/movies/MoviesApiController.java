@@ -1,5 +1,6 @@
-package io.swagger.api;
+package io.swagger.api.movies;
 
+import io.swagger.dao.movie.MovieDao;
 import io.swagger.dao.movie.MySqlMovieDao;
 import io.swagger.model.Movie;
 import io.swagger.model.Reservation;
@@ -32,10 +33,10 @@ public class MoviesApiController implements MoviesApi {
 
     private final HttpServletRequest request;
 
-    private final MySqlMovieDao movieDao;
+    private final MovieDao movieDao;
 
     @Autowired
-    public MoviesApiController(ObjectMapper objectMapper, HttpServletRequest request, MySqlMovieDao movieDao) {
+    public MoviesApiController(ObjectMapper objectMapper, HttpServletRequest request, MovieDao movieDao) {
         this.objectMapper = objectMapper;
         this.request = request;
         this.movieDao = movieDao;

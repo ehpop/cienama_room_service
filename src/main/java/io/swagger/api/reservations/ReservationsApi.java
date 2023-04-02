@@ -3,7 +3,7 @@
  * https://github.com/swagger-api/swagger-codegen
  * Do not edit the class manually.
  */
-package io.swagger.api;
+package io.swagger.api.reservations;
 
 import io.swagger.model.Reservation;
 import io.swagger.v3.oas.annotations.Operation;
