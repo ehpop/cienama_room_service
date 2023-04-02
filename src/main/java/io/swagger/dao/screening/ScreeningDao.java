@@ -13,5 +13,5 @@ public interface ScreeningDao {
 
     public List<Screening> getAllScreenings();
 
-    public boolean updateScreeningById(Integer id);
+    public boolean updateScreeningById(Screening screening, Integer id);
 }

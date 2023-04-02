@@ -67,13 +67,18 @@ public class MySqlScreeningDao implements ScreeningDao{
 
     @Override
     public List<Screening> getAllScreenings() {
-        String query = "Select * from " + screeningTableName;
+        String query = "SELECT * FROM " + screeningTableName;
 
         return jdbcTemplate.query(query, ScreeningDaoUtils::mapScreenings);
     }
 
     @Override
-    public boolean updateScreeningById(Integer id) {
-        return false;
+    public boolean updateScreeningById(Screening screening, Integer id) {
+        String query = "UPDATE " + screeningTableName + " SET start_time = ?, end_time = ?, room_id = ?, movie_id = ? WHERE id = " + id;
+
+        int rowsAffected = jdbcTemplate.update(query, screening.getStartTime().toString(), screening.getEndTime().toString(), screening.getRoom(), screening.getMovie());
+        screening.setId(id);
+
+        return rowsAffected > 0;
     }
 }

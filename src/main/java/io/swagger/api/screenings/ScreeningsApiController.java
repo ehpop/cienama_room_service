@@ -77,17 +77,19 @@ public class ScreeningsApiController implements ScreeningsApi {
     }
 
     public ResponseEntity<Screening> screeningsIdPut(@Parameter(in = ParameterIn.PATH, description = "ID of the screening to update", required = true, schema = @Schema()) @PathVariable("id") Integer id, @Parameter(in = ParameterIn.DEFAULT, description = "Screening object to update", required = true, schema = @Schema()) @Valid @RequestBody Screening body) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Screening>(objectMapper.readValue("{\n  \"movie\" : 6,\n  \"startTime\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"id\" : 0,\n  \"endTime\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"room\" : 1\n}", Screening.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Screening>(HttpStatus.INTERNAL_SERVER_ERROR);
+        boolean result;
+
+        try {
+            result = screeningDao.updateScreeningById(body, id);
+
+            if (result) {
+                return new ResponseEntity<>(body, HttpStatus.OK);
             }
+        } catch (DataAccessException e) {
+            log.error(e.getMessage());
         }
 
-        return new ResponseEntity<Screening>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     public ResponseEntity<Screening> screeningsPost(@Parameter(in = ParameterIn.DEFAULT, description = "Screening object to be created", required = true, schema = @Schema()) @Valid @RequestBody Screening body) {

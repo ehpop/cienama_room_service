@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,13 +74,18 @@ public class MoviesApiController implements MoviesApi {
     @Override
     public ResponseEntity<Movie> moviesIdPut(@Min(1) @Parameter(in = ParameterIn.PATH, description = "ID of the movie to update", required = true, schema = @Schema(allowableValues = {"1"}, minimum = "1"
     )) @PathVariable("id") Integer id, @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid @RequestBody Movie body) {
-        boolean success = movieDao.updateMovieById(body, id);
+        boolean success;
 
-        if (success) {
-            return new ResponseEntity<>(body, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+        try {
+            success = movieDao.updateMovieById(body, id);
+            if (success) {
+                return new ResponseEntity<>(body, HttpStatus.OK);
+            }
+        } catch (DataAccessException e) {
+            log.error(e.getMessage());
         }
+
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
     //! TODO
