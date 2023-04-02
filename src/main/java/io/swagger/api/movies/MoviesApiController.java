@@ -51,12 +51,11 @@ public class MoviesApiController implements MoviesApi {
     @Override
     public ResponseEntity<Void> moviesIdDelete(@Min(1) @Parameter(in = ParameterIn.PATH, description = "ID of the movie to delete", required = true, schema = @Schema(allowableValues = {"1"}, minimum = "1"
     )) @PathVariable("id") Integer id) {
-        boolean success = movieDao.deleteMovieById(id);
-        if (success) {
+        if (movieDao.deleteMovieById(id)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Override

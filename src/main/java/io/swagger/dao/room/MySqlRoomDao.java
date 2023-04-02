@@ -69,11 +69,11 @@ public class MySqlRoomDao implements RoomDao {
         int rowsAffected = 0;
 
         String query = "DELETE FROM " + "room_movies" + " WHERE room_id = " + id;
-        jdbcTemplate.update(query);
+        rowsAffected += jdbcTemplate.update(query);
 
         query = "DELETE FROM " + roomsTableName + " WHERE id = " + id;
         try {
-            rowsAffected = jdbcTemplate.update(query);
+            rowsAffected += jdbcTemplate.update(query);
         } catch (EmptyResultDataAccessException e) {
             return false;
         }

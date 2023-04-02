@@ -1,6 +1,7 @@
 package io.swagger.dao.screening;
 
 import io.swagger.model.Screening;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -53,7 +54,16 @@ public class MySqlScreeningDao implements ScreeningDao{
 
     @Override
     public boolean deleteScreeningById(Integer id) {
-        return false;
+        int rowsAffected = 0;
+        String query = "DELETE FROM " + screeningTableName + " where id = " + id;
+
+        try {
+            rowsAffected += jdbcTemplate.update(query);
+        } catch (EmptyResultDataAccessException e){
+            return false;
+        }
+
+        return rowsAffected > 0;
     }
 
     @Override

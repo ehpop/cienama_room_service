@@ -55,8 +55,11 @@ public class ScreeningsApiController implements ScreeningsApi {
     }
 
     public ResponseEntity<Void> screeningsIdDelete(@Parameter(in = ParameterIn.PATH, description = "ID of the screening to delete", required = true, schema = @Schema()) @PathVariable("id") Integer id) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        if (screeningDao.deleteScreeningById(id)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     public ResponseEntity<Screening> screeningsIdGet(@Parameter(in = ParameterIn.PATH, description = "ID of the screening to retrieve", required = true, schema = @Schema()) @PathVariable("id") Integer id) {
