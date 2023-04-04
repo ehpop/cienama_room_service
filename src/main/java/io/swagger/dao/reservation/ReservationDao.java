@@ -2,7 +2,7 @@ package io.swagger.dao.reservation;
 
 import io.swagger.model.Reservation;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ReservationDao {
     public Integer addReservation(Reservation reservation);
@@ -11,7 +11,7 @@ public interface ReservationDao {
 
     public boolean deleteReservationById(Integer id);
 
-    public ArrayList<Reservation> getAllReservations();
+    public List<Reservation> getAllReservations();
 
     public boolean updateReservationById(Reservation reservation, Integer id);
 }

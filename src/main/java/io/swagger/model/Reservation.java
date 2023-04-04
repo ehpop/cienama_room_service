@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * Reservation
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-03-31T21:52:24.625697542Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-04-04T22:42:52.930001122Z[GMT]")
 
 
 public class Reservation   {
@@ -95,10 +95,10 @@ public class Reservation   {
   }
 
   /**
-   * Unique Id of seat that was reserved
+   * Id of seat reserved
    * @return seat
    **/
-  @Schema(description = "Unique Id of seat that was reserved")
+  @Schema(description = "Id of seat reserved")
   
     public Integer getSeat() {
     return seat;

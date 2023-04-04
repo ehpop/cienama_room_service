@@ -3,7 +3,7 @@
  * https://github.com/swagger-api/swagger-codegen
  * Do not edit the class manually.
  */
-package io.swagger.api.reservations;
+package io.swagger.api;
 
 import io.swagger.model.Reservation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,19 +32,17 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-03-31T21:52:24.625697542Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-04-04T22:42:52.930001122Z[GMT]")
 @Validated
 public interface ReservationsApi {
 
     @Operation(summary = "Get all reservations", description = "", tags={ "Reservations" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Reservation.class)))),
-        
-        @ApiResponse(responseCode = "400", description = "Invalid input") })
+        @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Reservation.class)))) })
     @RequestMapping(value = "/reservations",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<Reservation>> reservationsGet(@NotNull @Parameter(in = ParameterIn.QUERY, description = "User to retrieve reservations for" ,required=true,schema=@Schema()) @Valid @RequestParam(value = "user", required = true) String user);
+    ResponseEntity<List<Reservation>> reservationsGet();
 
 
     @Operation(summary = "Delete a reservation by ID", description = "", tags={ "Reservations" })

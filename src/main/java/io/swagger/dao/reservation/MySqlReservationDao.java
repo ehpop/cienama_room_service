@@ -1,22 +1,18 @@
 package io.swagger.dao.reservation;
 
 import io.swagger.model.Reservation;
-import io.swagger.model.Screening;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MySqlReservationDao implements ReservationDao{
+public class MySqlReservationDao implements ReservationDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final String reservationsTableName;
@@ -48,32 +44,50 @@ public class MySqlReservationDao implements ReservationDao{
     @Override
     public Reservation getReservationById(Integer id) {
         String query = "SELECT * FROM " + reservationsTableName + " WHERE id = " + id;
-        List<Reservation> reservation;
+        Reservation reservation = jdbcTemplate.queryForObject(query, ReservationsDaoUtils::mapToReservation);
 
-        try {
-            reservation = jdbcTemplate.query(query, ReservationsDaoUtils::mapToReservation);
-            if (reservation.size() == 0) {
-                throw new EmptyResultDataAccessException(1);
-            }
-        } catch (DataAccessException e) {
-            throw new EmptyResultDataAccessException(1);
+        if (reservation != null) {
+            reservation.setId(id);
         }
 
-        return reservation.get(0);
+        return reservation;
     }
 
     @Override
     public boolean deleteReservationById(Integer id) {
-        return false;
+        int rowsAffected = 0;
+        String query = "DELETE FROM " + reservationsTableName + " where id = " + id;
+
+        try {
+            rowsAffected += jdbcTemplate.update(query);
+        } catch (DataAccessException e){
+            return false;
+        }
+
+        return rowsAffected > 0;
     }
 
     @Override
-    public ArrayList<Reservation> getAllReservations() {
-        return null;
+    public List<Reservation> getAllReservations() {
+        String query = "SELECT * FROM " + reservationsTableName;
+
+        return jdbcTemplate.query(query, ReservationsDaoUtils::mapToReservations);
     }
 
     @Override
     public boolean updateReservationById(Reservation reservation, Integer id) {
-        return false;
+        String query = "UPDATE " + reservationsTableName + " SET customer_name = ?, screening_id = ?, `date` = ?, seat_number = ? WHERE id = " + id;
+
+        int rowsAffected = jdbcTemplate.update(
+                query,
+                reservation.getCustomerName(),
+                reservation.getScreeningInfo(),
+                reservation.getDate().toString(),
+                reservation.getSeat()
+        );
+
+        reservation.setId(id);
+
+        return rowsAffected > 0;
     }
 }
