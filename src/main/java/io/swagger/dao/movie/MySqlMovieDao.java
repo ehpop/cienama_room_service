@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class MySqlMovieDao implements MovieDao {
@@ -47,30 +48,42 @@ public class MySqlMovieDao implements MovieDao {
     public Movie getMovieById(Integer id) {
         String query = "SELECT * FROM " + moviesTableName + " WHERE id = " + id;
 
-        return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(){
-            Reservation reservation = new Reservation();
-
-        });
+        return jdbcTemplate.queryForObject(query, MovieDaoUtils::mapToMovieWithId);
     }
 
     @Override
     public boolean deleteMovieById(Integer id) {
-           String query = "DELETE * FROM" + moviesTableName + "WHERE id = " + id;
-           int rowsAffected = 0;
+        String query = "DELETE * FROM" + moviesTableName + "WHERE id = " + id;
+        int rowsAffected = 0;
 
-           try {
-               rowsAffected = jdbcTemplate.update(query);
-           } catch (EmptyResultDataAccessException e) {
-               return false;
-           }
+        try {
+            rowsAffected = jdbcTemplate.update(query);
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        }
 
-           return rowsAffected == 1;
+        return rowsAffected == 1;
     }
 
     @Override
     public ArrayList<Movie> getAllMovies() {
         String query = "SELECT * FROM " + moviesTableName;
-        List<Movie> movies = jdbcTemplate.query(query, MovieDaoUtils::mapToMovie);
+
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query);
+
+        System.out.println(rows);
+
+        List<Movie> movies = new ArrayList<>();
+
+        for (Map<String, Object> row : rows) {
+            Movie movie = new Movie();
+            movie.setId(Integer.parseInt(String.valueOf(row.get("id"))));
+            movie.setDuration(Integer.parseInt(String.valueOf(row.get("duration"))));
+            movie.setAgeCategory(Integer.parseInt(String.valueOf(row.get("age_category"))));
+            movie.setTitle(String.valueOf(row.get("title")));
+            movie.setDirector(String.valueOf(row.get("director")));
+            movies.add(movie);
+        }
 
         return new ArrayList<>(movies);
     }
