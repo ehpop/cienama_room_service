@@ -24,7 +24,8 @@ public class ReservationsDaoUtils {
     public static List<Reservation> mapToReservations(ResultSet resultSet) throws SQLException {
         List<Reservation> reservations = new ArrayList<>();
 
-        while (resultSet.next()){
+        while (resultSet.next()) {
+            // ! TODO: refactor this using mapToReservation
             Reservation reservation = new Reservation();
             reservation.setId(resultSet.getInt("id"));
             reservation.setCustomerEmail(resultSet.getString("customer_email"));

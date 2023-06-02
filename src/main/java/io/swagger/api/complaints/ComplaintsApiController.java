@@ -60,43 +60,49 @@ public class ComplaintsApiController implements ComplaintsApi {
 
     public ResponseEntity<Void> complaintsIdDelete(
             @Parameter(in = ParameterIn.PATH, description = "ID of the Complaint to delete", required = true, schema = @Schema()) @PathVariable("id") Integer id) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        try {
+            boolean deleted = complaintsDao.deleteComplaintById(id);
+            if (deleted) {
+                return new ResponseEntity<Void>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     public ResponseEntity<Complaint> complaintsIdGet(
             @Parameter(in = ParameterIn.PATH, description = "ID of the Complaint to retrieve", required = true, schema = @Schema()) @PathVariable("id") Integer id) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Complaint>(objectMapper.readValue(
-                        "{\n  \"responseContact\" : \"\",\n  \"id\" : 0,\n  \"issueDate\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"userId\" : \"\",\n  \"status\" : \"new\"\n}",
-                        Complaint.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Complaint>(HttpStatus.INTERNAL_SERVER_ERROR);
+        try {
+            Complaint complaint = complaintsDao.getComplaintById(id);
+            System.out.println(complaint);
+            if (complaint != null) {
+                return new ResponseEntity<Complaint>(complaint, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Complaint>(HttpStatus.NOT_FOUND);
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<Complaint>(HttpStatus.BAD_REQUEST);
         }
-
-        return new ResponseEntity<Complaint>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Complaint> complaintsIdPut(
             @Parameter(in = ParameterIn.PATH, description = "ID of the Complaint to update", required = true, schema = @Schema()) @PathVariable("id") Integer id,
             @Parameter(in = ParameterIn.DEFAULT, description = "Complaint object to update", required = true, schema = @Schema()) @Valid @RequestBody Complaint body) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Complaint>(objectMapper.readValue(
-                        "{\n  \"responseContact\" : \"\",\n  \"id\" : 0,\n  \"issueDate\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"userId\" : \"\",\n  \"status\" : \"new\"\n}",
-                        Complaint.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Complaint>(HttpStatus.INTERNAL_SERVER_ERROR);
+        try {
+            boolean updated = complaintsDao.updateComplaintById(body, id);
+            if (updated) {
+                return new ResponseEntity<Complaint>(body, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Complaint>(HttpStatus.NOT_FOUND);
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<Complaint>(HttpStatus.BAD_REQUEST);
         }
-
-        return new ResponseEntity<Complaint>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Complaint> complaintsPost(

@@ -2,6 +2,7 @@ package io.swagger.dao.complaints;
 
 import io.swagger.model.Complaint;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -48,12 +49,17 @@ public class MySqlComplaintsDao implements ComplaintsDao {
     public Complaint getComplaintById(Integer id) {
         String query = "SELECT * FROM " + complaintsTableName + " WHERE id = " + id;
 
-        return jdbcTemplate.queryForObject(query, Complaint.class);
+        try {
+            return jdbcTemplate.queryForObject(query, ComplaintsDaoUtils::mapToComplaint);
+        } catch (IncorrectResultSizeDataAccessException e) {
+            return null;
+        }
+
     }
 
     @Override
     public boolean deleteComplaintById(Integer id) {
-        String query = "DELETE * FROM " + complaintsTableName + " WHERE id = " + id;
+        String query = "DELETE FROM " + complaintsTableName + " WHERE id = " + id;
         int rowsAffected;
         try {
             rowsAffected = jdbcTemplate.update(query);
@@ -68,13 +74,13 @@ public class MySqlComplaintsDao implements ComplaintsDao {
     public List<Complaint> getAllComplaints() {
         String query = "SELECT * FROM " + complaintsTableName;
 
-        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Complaint.class));
+        return jdbcTemplate.query(query, ComplaintsDaoUtils::mapToComplaints);
     }
 
     @Override
     public boolean updateComplaintById(Complaint complaint, Integer id) {
         String query = "UPDATE " + complaintsTableName
-                + " SET (issue_date = ?, user_id = ?, response_contact = ?, status = ?, complaint_msg = ?) WHERE id = "
+                + " SET issue_date = ?, user_id = ?, response_contact = ?, status = ?, complaint_msg = ? WHERE id = "
                 + id;
 
         int rowsAffected = jdbcTemplate.update(query, complaint.getIssueDate().toString(), complaint.getUserId(),
