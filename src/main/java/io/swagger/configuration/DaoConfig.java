@@ -1,11 +1,11 @@
 package io.swagger.configuration;
 
+import io.swagger.dao.complaints.MySqlComplaintsDao;
 import io.swagger.dao.movie.MySqlMovieDao;
 import io.swagger.dao.reservation.MySqlReservationDao;
 import io.swagger.dao.room.MySqlRoomDao;
 import io.swagger.dao.screening.MySqlScreeningDao;
 import io.swagger.dao.users.MySqlUsersDao;
-import io.swagger.dao.complaints.MySqlComplaintsDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

@@ -1,10 +1,8 @@
 package io.swagger.api.reservations;
 
-import com.mysql.cj.jdbc.exceptions.SQLError;
-import io.swagger.api.reservations.ReservationsApi;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.dao.reservation.ReservationDao;
 import io.swagger.model.Reservation;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,11 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.sql.SQLIntegrityConstraintViolationException;
+import javax.validation.Valid;
 import java.util.List;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-03-31T21:52:24.625697542Z[GMT]")

@@ -1,9 +1,8 @@
 package io.swagger.api.screenings;
 
-import io.swagger.dao.screening.ScreeningDao;
-import io.swagger.dao.screening.ScreeningDaoUtils;
-import io.swagger.model.Screening;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.dao.screening.ScreeningDao;
+import io.swagger.model.Screening;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,13 +12,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 

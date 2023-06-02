@@ -2,7 +2,6 @@ package io.swagger.dao.reservation;
 
 import io.swagger.model.Reservation;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -24,10 +23,11 @@ public class MySqlReservationDao implements ReservationDao {
 
     @Override
     public Integer addReservation(Reservation reservation) {
-        String query = "INSERT INTO " + reservationsTableName + " (customer_name, screening_id, `date`, seat_number) VALUES(?, ?, ?, ?)";
+        String query = "INSERT INTO " + reservationsTableName
+                + " (customer_name, screening_id, `date`, seat_number) VALUES(?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        int rowsAffected = jdbcTemplate.update(connection -> {
+        jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, reservation.getCustomerEmail());
             preparedStatement.setInt(2, reservation.getScreeningId());
@@ -36,19 +36,15 @@ public class MySqlReservationDao implements ReservationDao {
             return preparedStatement;
         }, keyHolder);
 
-        reservation.setId(Objects.requireNonNull(keyHolder.getKey()).intValue());
+        int id = Objects.requireNonNull(keyHolder.getKey()).intValue();
 
-        return reservation.getId();
+        return id;
     }
 
     @Override
     public Reservation getReservationById(Integer id) {
         String query = "SELECT * FROM " + reservationsTableName + " WHERE id = " + id;
         Reservation reservation = jdbcTemplate.queryForObject(query, ReservationsDaoUtils::mapToReservation);
-
-        if (reservation != null) {
-            reservation.setId(id);
-        }
 
         return reservation;
     }
@@ -60,7 +56,7 @@ public class MySqlReservationDao implements ReservationDao {
 
         try {
             rowsAffected += jdbcTemplate.update(query);
-        } catch (DataAccessException e){
+        } catch (DataAccessException e) {
             return false;
         }
 
@@ -76,15 +72,15 @@ public class MySqlReservationDao implements ReservationDao {
 
     @Override
     public boolean updateReservationById(Reservation reservation, Integer id) {
-        String query = "UPDATE " + reservationsTableName + " SET customer_name = ?, screening_id = ?, `date` = ?, seat_number = ? WHERE id = " + id;
+        String query = "UPDATE " + reservationsTableName
+                + " SET customer_name = ?, screening_id = ?, `date` = ?, seat_number = ? WHERE id = " + id;
 
         int rowsAffected = jdbcTemplate.update(
                 query,
                 reservation.getCustomerEmail(),
                 reservation.getScreeningId(),
                 reservation.getDate().toString(),
-                reservation.getSeat()
-        );
+                reservation.getSeat());
 
         reservation.setId(id);
 

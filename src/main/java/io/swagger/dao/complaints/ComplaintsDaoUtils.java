@@ -1,13 +1,12 @@
 package io.swagger.dao.complaints;
 
+import io.swagger.model.Complaint;
+import org.threeten.bp.OffsetDateTime;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.threeten.bp.OffsetDateTime;
-
-import io.swagger.model.Complaint;
 
 public class ComplaintsDaoUtils {
     public static Complaint mapToComplaint(ResultSet resultSet, Integer id) throws SQLException {
