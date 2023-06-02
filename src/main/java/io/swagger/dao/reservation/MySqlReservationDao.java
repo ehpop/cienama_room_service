@@ -24,7 +24,7 @@ public class MySqlReservationDao implements ReservationDao {
     @Override
     public Integer addReservation(Reservation reservation) {
         String query = "INSERT INTO " + reservationsTableName
-                + " (customer_name, screening_id, `date`, seat_number) VALUES(?, ?, ?, ?)";
+                + " (customer_email, screening_id, `date`, seat_number) VALUES(?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
@@ -36,17 +36,14 @@ public class MySqlReservationDao implements ReservationDao {
             return preparedStatement;
         }, keyHolder);
 
-        int id = Objects.requireNonNull(keyHolder.getKey()).intValue();
-
-        return id;
+        return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
     @Override
     public Reservation getReservationById(Integer id) {
         String query = "SELECT * FROM " + reservationsTableName + " WHERE id = " + id;
-        Reservation reservation = jdbcTemplate.queryForObject(query, ReservationsDaoUtils::mapToReservation);
 
-        return reservation;
+        return jdbcTemplate.queryForObject(query, ReservationsDaoUtils::mapToReservation);
     }
 
     @Override
@@ -73,7 +70,7 @@ public class MySqlReservationDao implements ReservationDao {
     @Override
     public boolean updateReservationById(Reservation reservation, Integer id) {
         String query = "UPDATE " + reservationsTableName
-                + " SET customer_name = ?, screening_id = ?, `date` = ?, seat_number = ? WHERE id = " + id;
+                + " SET customer_email = ?, screening_id = ?, `date` = ?, seat_number = ? WHERE id = " + id;
 
         int rowsAffected = jdbcTemplate.update(
                 query,
