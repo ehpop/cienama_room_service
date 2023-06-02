@@ -12,7 +12,7 @@ import javax.validation.constraints.*;
  * Movie
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-03-31T21:52:24.625697542Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-06-02T08:09:53.657307486Z[GMT]")
 
 
 public class Movie   {
@@ -31,6 +31,12 @@ public class Movie   {
   @JsonProperty("duration")
   private Integer duration = null;
 
+  @JsonProperty("posterUrl")
+  private String posterUrl = null;
+
+  @JsonProperty("description")
+  private String description = null;
+
   public Movie id(Integer id) {
     this.id = id;
     return this;
@@ -41,8 +47,8 @@ public class Movie   {
    * @return id
    **/
   @Schema(description = "Unique indetifier for a movie")
-  
-    public Integer getId() {
+
+  public Integer getId() {
     return id;
   }
 
@@ -60,8 +66,8 @@ public class Movie   {
    * @return title
    **/
   @Schema(description = "Title of the movie")
-  
-    public String getTitle() {
+
+  public String getTitle() {
     return title;
   }
 
@@ -79,8 +85,8 @@ public class Movie   {
    * @return ageCategory
    **/
   @Schema(description = "Minimal age requierd to view a movie")
-  
-    public Integer getAgeCategory() {
+
+  public Integer getAgeCategory() {
     return ageCategory;
   }
 
@@ -98,8 +104,8 @@ public class Movie   {
    * @return director
    **/
   @Schema(description = "Director of the movie")
-  
-    public String getDirector() {
+
+  public String getDirector() {
     return director;
   }
 
@@ -117,13 +123,51 @@ public class Movie   {
    * @return duration
    **/
   @Schema(description = "Duration of the movie in minutes")
-  
-    public Integer getDuration() {
+
+  public Integer getDuration() {
     return duration;
   }
 
   public void setDuration(Integer duration) {
     this.duration = duration;
+  }
+
+  public Movie posterUrl(String posterUrl) {
+    this.posterUrl = posterUrl;
+    return this;
+  }
+
+  /**
+   * URL to the poster of the movie
+   * @return posterUrl
+   **/
+  @Schema(description = "URL to the poster of the movie")
+
+  public String getPosterUrl() {
+    return posterUrl;
+  }
+
+  public void setPosterUrl(String posterUrl) {
+    this.posterUrl = posterUrl;
+  }
+
+  public Movie description(String description) {
+    this.description = description;
+    return this;
+  }
+
+  /**
+   * Description of the movie
+   * @return description
+   **/
+  @Schema(description = "Description of the movie")
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
 
@@ -137,27 +181,31 @@ public class Movie   {
     }
     Movie movie = (Movie) o;
     return Objects.equals(this.id, movie.id) &&
-        Objects.equals(this.title, movie.title) &&
-        Objects.equals(this.ageCategory, movie.ageCategory) &&
-        Objects.equals(this.director, movie.director) &&
-        Objects.equals(this.duration, movie.duration);
+            Objects.equals(this.title, movie.title) &&
+            Objects.equals(this.ageCategory, movie.ageCategory) &&
+            Objects.equals(this.director, movie.director) &&
+            Objects.equals(this.duration, movie.duration) &&
+            Objects.equals(this.posterUrl, movie.posterUrl) &&
+            Objects.equals(this.description, movie.description);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, ageCategory, director, duration);
+    return Objects.hash(id, title, ageCategory, director, duration, posterUrl, description);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Movie {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    ageCategory: ").append(toIndentedString(ageCategory)).append("\n");
     sb.append("    director: ").append(toIndentedString(director)).append("\n");
     sb.append("    duration: ").append(toIndentedString(duration)).append("\n");
+    sb.append("    posterUrl: ").append(toIndentedString(posterUrl)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("}");
     return sb.toString();
   }

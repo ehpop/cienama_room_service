@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.*;
 import javax.validation.Valid;
@@ -27,7 +24,7 @@ import java.util.List;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-03-31T17:46:47.268366723Z[GMT]")
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin("*")
 public class MoviesApiController implements MoviesApi {
 
     private static final Logger log = LoggerFactory.getLogger(MoviesApiController.class);
@@ -98,6 +95,7 @@ public class MoviesApiController implements MoviesApi {
 
     @Override
     public ResponseEntity<Void> moviesIdReservePost(@Parameter(in = ParameterIn.PATH, description = "ID of the movie to reserve", required = true, schema = @Schema()) @PathVariable("id") Integer id, @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid @RequestBody Reservation body) {
+        //TODO: Check if seat is not taken
         if (movieDao.checkIfMovieExist(id)) {
             try {
                 reservationDao.addReservation(body);
@@ -112,7 +110,11 @@ public class MoviesApiController implements MoviesApi {
 
     @Override
     public ResponseEntity<Movie> moviesPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid @RequestBody Movie body) {
-        Integer newMoviesId = movieDao.addMovie(body);
+        try {
+            Integer newMoviesId = movieDao.addMovie(body);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity<Movie>(body, HttpStatus.CREATED);
     }

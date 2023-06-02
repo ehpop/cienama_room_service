@@ -4,6 +4,8 @@ import io.swagger.dao.movie.MySqlMovieDao;
 import io.swagger.dao.reservation.MySqlReservationDao;
 import io.swagger.dao.room.MySqlRoomDao;
 import io.swagger.dao.screening.MySqlScreeningDao;
+import io.swagger.dao.users.MySqlUsersDao;
+import io.swagger.dao.complaints.MySqlComplaintsDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,17 +33,20 @@ public class DaoConfig {
     @Value("${spring.datasource.rooms_table_name}")
     private String roomsTableName;
 
-    @Value("${spring.datasource.room_movies_table_name}")
-    private String roomMoviesTableName;
-
     @Value("${spring.datasource.screenings_table_name}")
     private String screeningsTableName;
 
     @Value("${spring.datasource.reservations_table_name}")
     private String reservationsTableName;
 
+    @Value("${spring.datasource.users_table_name}")
+    private String usersTableName;
+
+    @Value("${spring.datasource.complaints_table_name}")
+    private String complaintsTableName;
+
     @Bean
-    public JdbcTemplate jdbcTemplate(){
+    public JdbcTemplate jdbcTemplate() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 
         driverManagerDataSource.setDriverClassName(driverClassName);
@@ -60,22 +65,32 @@ public class DaoConfig {
 
     @Autowired
     @Bean
-    public MySqlRoomDao roomDao(JdbcTemplate jdbcTemplate){
-        return new MySqlRoomDao(jdbcTemplate, roomsTableName, roomMoviesTableName);
+    public MySqlRoomDao roomDao(JdbcTemplate jdbcTemplate) {
+        return new MySqlRoomDao(jdbcTemplate, roomsTableName);
     }
 
     @Autowired
     @Bean
-    public MySqlReservationDao reservationDao(JdbcTemplate jdbcTemplate){
+    public MySqlReservationDao reservationDao(JdbcTemplate jdbcTemplate) {
         return new MySqlReservationDao(jdbcTemplate, reservationsTableName);
     }
 
     @Autowired
     @Bean
-    public MySqlScreeningDao screeningDao(JdbcTemplate jdbcTemplate){
+    public MySqlScreeningDao screeningDao(JdbcTemplate jdbcTemplate) {
         return new MySqlScreeningDao(jdbcTemplate, screeningsTableName);
     }
 
+    @Autowired
+    @Bean
+    public MySqlUsersDao userDao(JdbcTemplate jdbcTemplate) {
+        return new MySqlUsersDao(jdbcTemplate, usersTableName);
+    }
+
+    @Autowired
+    @Bean
+    public MySqlComplaintsDao complaintDao(JdbcTemplate jdbcTemplate) {
+        return new MySqlComplaintsDao(jdbcTemplate, complaintsTableName);
+    }
 
 }
-

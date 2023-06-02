@@ -1,7 +1,7 @@
 package io.swagger.api.reservations;
 
 import com.mysql.cj.jdbc.exceptions.SQLError;
-import io.swagger.api.ReservationsApi;
+import io.swagger.api.reservations.ReservationsApi;
 import io.swagger.dao.reservation.ReservationDao;
 import io.swagger.model.Reservation;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,10 +14,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.*;
 import javax.validation.Valid;
@@ -28,6 +25,7 @@ import java.util.List;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-03-31T21:52:24.625697542Z[GMT]")
 @RestController
+@CrossOrigin(origins = "http://localhost:3000",  methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class ReservationsApiController implements ReservationsApi {
 
     private static final Logger log = LoggerFactory.getLogger(ReservationsApiController.class);

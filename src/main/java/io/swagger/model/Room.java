@@ -4,8 +4,6 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -14,7 +12,7 @@ import javax.validation.constraints.*;
  * Room
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-04-01T09:19:04.215466341Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-06-01T22:20:35.081630147Z[GMT]")
 
 
 public class Room   {
@@ -30,10 +28,6 @@ public class Room   {
   @JsonProperty("rows")
   private Integer rows = null;
 
-  @JsonProperty("movies")
-  @Valid
-  private List<Integer> movies = null;
-
   public Room id(Integer id) {
     this.id = id;
     return this;
@@ -44,8 +38,8 @@ public class Room   {
    * @return id
    **/
   @Schema(description = "Unique identifier for the room")
-  
-    public Integer getId() {
+
+  public Integer getId() {
     return id;
   }
 
@@ -63,8 +57,8 @@ public class Room   {
    * @return name
    **/
   @Schema(description = "Name of the room")
-  
-    public String getName() {
+
+  public String getName() {
     return name;
   }
 
@@ -82,8 +76,8 @@ public class Room   {
    * @return capacity
    **/
   @Schema(description = "Maximum number of people that can fit in the room")
-  
-    public Integer getCapacity() {
+
+  public Integer getCapacity() {
     return capacity;
   }
 
@@ -101,40 +95,13 @@ public class Room   {
    * @return rows
    **/
   @Schema(description = "Number of rows available in room")
-  
-    public Integer getRows() {
+
+  public Integer getRows() {
     return rows;
   }
 
   public void setRows(Integer rows) {
     this.rows = rows;
-  }
-
-  public Room movies(List<Integer> movies) {
-    this.movies = movies;
-    return this;
-  }
-
-  public Room addMoviesItem(Integer moviesItem) {
-    if (this.movies == null) {
-      this.movies = new ArrayList<Integer>();
-    }
-    this.movies.add(moviesItem);
-    return this;
-  }
-
-  /**
-   * Get movies
-   * @return movies
-   **/
-  @Schema(description = "")
-  
-    public List<Integer> getMovies() {
-    return movies;
-  }
-
-  public void setMovies(List<Integer> movies) {
-    this.movies = movies;
   }
 
 
@@ -148,27 +115,25 @@ public class Room   {
     }
     Room room = (Room) o;
     return Objects.equals(this.id, room.id) &&
-        Objects.equals(this.name, room.name) &&
-        Objects.equals(this.capacity, room.capacity) &&
-        Objects.equals(this.rows, room.rows) &&
-        Objects.equals(this.movies, room.movies);
+            Objects.equals(this.name, room.name) &&
+            Objects.equals(this.capacity, room.capacity) &&
+            Objects.equals(this.rows, room.rows);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, capacity, rows, movies);
+    return Objects.hash(id, name, capacity, rows);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Room {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    capacity: ").append(toIndentedString(capacity)).append("\n");
     sb.append("    rows: ").append(toIndentedString(rows)).append("\n");
-    sb.append("    movies: ").append(toIndentedString(movies)).append("\n");
     sb.append("}");
     return sb.toString();
   }

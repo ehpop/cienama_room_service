@@ -13,18 +13,18 @@ import javax.validation.constraints.*;
  * Reservation
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-04-04T22:42:52.930001122Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-06-01T22:20:35.081630147Z[GMT]")
 
 
 public class Reservation   {
   @JsonProperty("id")
   private Integer id = null;
 
-  @JsonProperty("customerName")
-  private String customerName = null;
+  @JsonProperty("customerEmail")
+  private String customerEmail = null;
 
-  @JsonProperty("screeningInfo")
-  private Integer screeningInfo = null;
+  @JsonProperty("screeningId")
+  private Integer screeningId = null;
 
   @JsonProperty("seat")
   private Integer seat = null;
@@ -42,8 +42,8 @@ public class Reservation   {
    * @return id
    **/
   @Schema(description = "Unique identifier of a seat")
-  
-    public Integer getId() {
+
+  public Integer getId() {
     return id;
   }
 
@@ -51,42 +51,42 @@ public class Reservation   {
     this.id = id;
   }
 
-  public Reservation customerName(String customerName) {
-    this.customerName = customerName;
+  public Reservation customerEmail(String customerEmail) {
+    this.customerEmail = customerEmail;
     return this;
   }
 
   /**
-   * The name of the customer who made the reservation
-   * @return customerName
+   * Email of the customer who made the reservation
+   * @return customerEmail
    **/
-  @Schema(description = "The name of the customer who made the reservation")
-  
-    public String getCustomerName() {
-    return customerName;
+  @Schema(description = "Email of the customer who made the reservation")
+
+  public String getCustomerEmail() {
+    return customerEmail;
   }
 
-  public void setCustomerName(String customerName) {
-    this.customerName = customerName;
+  public void setCustomerEmail(String customerEmail) {
+    this.customerEmail = customerEmail;
   }
 
-  public Reservation screeningInfo(Integer screeningInfo) {
-    this.screeningInfo = screeningInfo;
+  public Reservation screeningId(Integer screeningId) {
+    this.screeningId = screeningId;
     return this;
   }
 
   /**
    * Unique Id of screening
-   * @return screeningInfo
+   * @return screeningId
    **/
   @Schema(description = "Unique Id of screening")
-  
-    public Integer getScreeningInfo() {
-    return screeningInfo;
+
+  public Integer getScreeningId() {
+    return screeningId;
   }
 
-  public void setScreeningInfo(Integer screeningInfo) {
-    this.screeningInfo = screeningInfo;
+  public void setScreeningId(Integer screeningId) {
+    this.screeningId = screeningId;
   }
 
   public Reservation seat(Integer seat) {
@@ -95,12 +95,12 @@ public class Reservation   {
   }
 
   /**
-   * Id of seat reserved
+   * Number of seat reserved
    * @return seat
    **/
-  @Schema(description = "Id of seat reserved")
-  
-    public Integer getSeat() {
+  @Schema(description = "Number of seat reserved")
+
+  public Integer getSeat() {
     return seat;
   }
 
@@ -118,9 +118,9 @@ public class Reservation   {
    * @return date
    **/
   @Schema(description = "Date of the reservation")
-  
-    @Valid
-    public OffsetDateTime getDate() {
+
+  @Valid
+  public OffsetDateTime getDate() {
     return date;
   }
 
@@ -139,25 +139,25 @@ public class Reservation   {
     }
     Reservation reservation = (Reservation) o;
     return Objects.equals(this.id, reservation.id) &&
-        Objects.equals(this.customerName, reservation.customerName) &&
-        Objects.equals(this.screeningInfo, reservation.screeningInfo) &&
-        Objects.equals(this.seat, reservation.seat) &&
-        Objects.equals(this.date, reservation.date);
+            Objects.equals(this.customerEmail, reservation.customerEmail) &&
+            Objects.equals(this.screeningId, reservation.screeningId) &&
+            Objects.equals(this.seat, reservation.seat) &&
+            Objects.equals(this.date, reservation.date);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, customerName, screeningInfo, seat, date);
+    return Objects.hash(id, customerEmail, screeningId, seat, date);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Reservation {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    customerName: ").append(toIndentedString(customerName)).append("\n");
-    sb.append("    screeningInfo: ").append(toIndentedString(screeningInfo)).append("\n");
+    sb.append("    customerEmail: ").append(toIndentedString(customerEmail)).append("\n");
+    sb.append("    screeningId: ").append(toIndentedString(screeningId)).append("\n");
     sb.append("    seat: ").append(toIndentedString(seat)).append("\n");
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
     sb.append("}");

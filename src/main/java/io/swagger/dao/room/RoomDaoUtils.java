@@ -15,7 +15,6 @@ public class RoomDaoUtils {
         room.setName(resultSet.getString("name"));
         room.setCapacity(resultSet.getInt("capacity"));
         room.setRows(resultSet.getInt("rows"));
-        room.setMovies(new ArrayList<>());
 
         return room;
     }
@@ -26,7 +25,6 @@ public class RoomDaoUtils {
         room.setCapacity(resultSet.getInt("capacity"));
         room.setName(resultSet.getString("name"));
         room.setRows(resultSet.getInt("rows"));
-        room.setMovies(new ArrayList<>());
 
         return room;
     }

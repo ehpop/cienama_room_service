@@ -1,0 +1,113 @@
+package io.swagger.api.complaints;
+
+import io.swagger.dao.complaints.ComplaintsDao;
+import io.swagger.model.Complaint;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-06-01T22:20:35.081630147Z[GMT]")
+@RestController
+public class ComplaintsApiController implements ComplaintsApi {
+
+    private static final Logger log = LoggerFactory.getLogger(ComplaintsApiController.class);
+
+    private final ObjectMapper objectMapper;
+
+    private final HttpServletRequest request;
+
+    private final ComplaintsDao complaintsDao;
+
+    @org.springframework.beans.factory.annotation.Autowired
+    public ComplaintsApiController(ObjectMapper objectMapper, HttpServletRequest request, ComplaintsDao complaintsDao) {
+        this.objectMapper = objectMapper;
+        this.request = request;
+        this.complaintsDao = complaintsDao;
+    }
+
+    public ResponseEntity<List<Complaint>> complaintsGet() {
+        List<Complaint> complaints = complaintsDao.getAllComplaints();
+
+        return new ResponseEntity<List<Complaint>>(complaints, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Void> complaintsIdDelete(
+            @Parameter(in = ParameterIn.PATH, description = "ID of the Complaint to delete", required = true, schema = @Schema()) @PathVariable("id") Integer id) {
+        String accept = request.getHeader("Accept");
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<Complaint> complaintsIdGet(
+            @Parameter(in = ParameterIn.PATH, description = "ID of the Complaint to retrieve", required = true, schema = @Schema()) @PathVariable("id") Integer id) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<Complaint>(objectMapper.readValue(
+                        "{\n  \"responseContact\" : \"\",\n  \"id\" : 0,\n  \"issueDate\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"userId\" : \"\",\n  \"status\" : \"new\"\n}",
+                        Complaint.class), HttpStatus.NOT_IMPLEMENTED);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<Complaint>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        return new ResponseEntity<Complaint>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<Complaint> complaintsIdPut(
+            @Parameter(in = ParameterIn.PATH, description = "ID of the Complaint to update", required = true, schema = @Schema()) @PathVariable("id") Integer id,
+            @Parameter(in = ParameterIn.DEFAULT, description = "Complaint object to update", required = true, schema = @Schema()) @Valid @RequestBody Complaint body) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<Complaint>(objectMapper.readValue(
+                        "{\n  \"responseContact\" : \"\",\n  \"id\" : 0,\n  \"issueDate\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"userId\" : \"\",\n  \"status\" : \"new\"\n}",
+                        Complaint.class), HttpStatus.NOT_IMPLEMENTED);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<Complaint>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        return new ResponseEntity<Complaint>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<Complaint> complaintsPost(
+            @Parameter(in = ParameterIn.DEFAULT, description = "Complaint object to be created", required = true, schema = @Schema()) @Valid @RequestBody Complaint body) {
+        try {
+            Integer newComplainId = complaintsDao.addComplaint(body);
+        } catch (Exception e) {
+            return new ResponseEntity<Complaint>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<Complaint>(body, HttpStatus.CREATED);
+    }
+
+}

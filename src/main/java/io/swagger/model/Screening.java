@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * Screening
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-03-31T21:52:24.625697542Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-06-01T22:20:35.081630147Z[GMT]")
 
 
 public class Screening   {
@@ -42,8 +42,8 @@ public class Screening   {
    * @return id
    **/
   @Schema(description = "Unique identifier for the screening")
-  
-    public Integer getId() {
+
+  public Integer getId() {
     return id;
   }
 
@@ -61,8 +61,8 @@ public class Screening   {
    * @return movie
    **/
   @Schema(description = "Unique Id of the movie")
-  
-    public Integer getMovie() {
+
+  public Integer getMovie() {
     return movie;
   }
 
@@ -80,8 +80,8 @@ public class Screening   {
    * @return room
    **/
   @Schema(description = "Unique Id of the screening")
-  
-    public Integer getRoom() {
+
+  public Integer getRoom() {
     return room;
   }
 
@@ -99,9 +99,9 @@ public class Screening   {
    * @return startTime
    **/
   @Schema(description = "Time the movie starts")
-  
-    @Valid
-    public OffsetDateTime getStartTime() {
+
+  @Valid
+  public OffsetDateTime getStartTime() {
     return startTime;
   }
 
@@ -119,9 +119,9 @@ public class Screening   {
    * @return endTime
    **/
   @Schema(description = "Time the movie ends")
-  
-    @Valid
-    public OffsetDateTime getEndTime() {
+
+  @Valid
+  public OffsetDateTime getEndTime() {
     return endTime;
   }
 
@@ -140,10 +140,10 @@ public class Screening   {
     }
     Screening screening = (Screening) o;
     return Objects.equals(this.id, screening.id) &&
-        Objects.equals(this.movie, screening.movie) &&
-        Objects.equals(this.room, screening.room) &&
-        Objects.equals(this.startTime, screening.startTime) &&
-        Objects.equals(this.endTime, screening.endTime);
+            Objects.equals(this.movie, screening.movie) &&
+            Objects.equals(this.room, screening.room) &&
+            Objects.equals(this.startTime, screening.startTime) &&
+            Objects.equals(this.endTime, screening.endTime);
   }
 
   @Override
@@ -155,7 +155,7 @@ public class Screening   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Screening {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    movie: ").append(toIndentedString(movie)).append("\n");
     sb.append("    room: ").append(toIndentedString(room)).append("\n");

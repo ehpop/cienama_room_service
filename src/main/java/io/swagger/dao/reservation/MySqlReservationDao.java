@@ -29,8 +29,8 @@ public class MySqlReservationDao implements ReservationDao {
 
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, reservation.getCustomerName());
-            preparedStatement.setInt(2, reservation.getScreeningInfo());
+            preparedStatement.setString(1, reservation.getCustomerEmail());
+            preparedStatement.setInt(2, reservation.getScreeningId());
             preparedStatement.setString(3, reservation.getDate().toString());
             preparedStatement.setInt(4, reservation.getSeat());
             return preparedStatement;
@@ -80,8 +80,8 @@ public class MySqlReservationDao implements ReservationDao {
 
         int rowsAffected = jdbcTemplate.update(
                 query,
-                reservation.getCustomerName(),
-                reservation.getScreeningInfo(),
+                reservation.getCustomerEmail(),
+                reservation.getScreeningId(),
                 reservation.getDate().toString(),
                 reservation.getSeat()
         );

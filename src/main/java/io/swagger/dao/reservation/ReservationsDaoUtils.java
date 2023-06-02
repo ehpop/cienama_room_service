@@ -13,8 +13,8 @@ public class ReservationsDaoUtils {
     public static Reservation mapToReservation(ResultSet resultSet, Integer id) throws SQLException {
         Reservation reservation = new Reservation();
         reservation.setId(id);
-        reservation.setCustomerName(resultSet.getString("customer_name"));
-        reservation.setScreeningInfo(resultSet.getInt("screening_id"));
+        reservation.setCustomerEmail(resultSet.getString("customer_email"));
+        reservation.setScreeningId(resultSet.getInt("screening_id"));
         reservation.setDate(OffsetDateTime.parse(resultSet.getString("date")));
         reservation.setSeat(resultSet.getInt("seat_number"));
 
@@ -27,8 +27,8 @@ public class ReservationsDaoUtils {
         while (resultSet.next()){
             Reservation reservation = new Reservation();
             reservation.setId(resultSet.getInt("id"));
-            reservation.setCustomerName(resultSet.getString("customer_name"));
-            reservation.setScreeningInfo(resultSet.getInt("screening_id"));
+            reservation.setCustomerEmail(resultSet.getString("customer_email"));
+            reservation.setScreeningId(resultSet.getInt("screening_id"));
             reservation.setDate(OffsetDateTime.parse(resultSet.getString("date")));
             reservation.setSeat(resultSet.getInt("seat_number"));
 
