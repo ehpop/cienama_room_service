@@ -12,6 +12,7 @@ public class ReservationsDaoUtils {
 
     public static Reservation mapToReservationWithoutId(ResultSet resultSet) throws SQLException {
         Reservation reservation = new Reservation();
+        reservation.setId(resultSet.getInt("id"));
         reservation.setCustomerEmail(resultSet.getString("customer_email"));
         reservation.setScreeningId(resultSet.getInt("screening_id"));
         reservation.setDate(OffsetDateTime.parse(resultSet.getString("date")));

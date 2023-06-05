@@ -12,6 +12,7 @@ public class ScreeningDaoUtils {
 
     public static Screening mapToScreeningWithoutId(ResultSet rs) throws SQLException {
         Screening screening = new Screening();
+        screening.setId(rs.getInt("id"));
         screening.setMovie(rs.getInt("movie_id"));
         screening.setRoom(rs.getInt("room_id"));
         screening.setStartTime(OffsetDateTime.parse(rs.getString("start_time")));
