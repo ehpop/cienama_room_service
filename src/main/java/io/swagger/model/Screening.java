@@ -1,21 +1,21 @@
 package io.swagger.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.validation.annotation.Validated;
-import org.threeten.bp.OffsetDateTime;
-
-import javax.validation.Valid;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.v3.oas.annotations.media.Schema;
+import org.threeten.bp.OffsetDateTime;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * Screening
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-06-01T22:20:35.081630147Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-06-05T18:15:23.930444515Z[GMT]")
 
-
-public class Screening   {
+public class Screening {
   @JsonProperty("id")
   private Integer id = null;
 
@@ -31,6 +31,9 @@ public class Screening   {
   @JsonProperty("endTime")
   private OffsetDateTime endTime = null;
 
+  @JsonProperty("ticketPrice")
+  private Double ticketPrice = null;
+
   public Screening id(Integer id) {
     this.id = id;
     return this;
@@ -38,6 +41,7 @@ public class Screening   {
 
   /**
    * Unique identifier for the screening
+   * 
    * @return id
    **/
   @Schema(description = "Unique identifier for the screening")
@@ -57,6 +61,7 @@ public class Screening   {
 
   /**
    * Unique Id of the movie
+   * 
    * @return movie
    **/
   @Schema(description = "Unique Id of the movie")
@@ -76,6 +81,7 @@ public class Screening   {
 
   /**
    * Unique Id of the screening
+   * 
    * @return room
    **/
   @Schema(description = "Unique Id of the screening")
@@ -95,6 +101,7 @@ public class Screening   {
 
   /**
    * Time the movie starts
+   * 
    * @return startTime
    **/
   @Schema(description = "Time the movie starts")
@@ -115,6 +122,7 @@ public class Screening   {
 
   /**
    * Time the movie ends
+   * 
    * @return endTime
    **/
   @Schema(description = "Time the movie ends")
@@ -128,6 +136,25 @@ public class Screening   {
     this.endTime = endTime;
   }
 
+  public Screening ticketPrice(Double ticketPrice) {
+    this.ticketPrice = ticketPrice;
+    return this;
+  }
+
+  /**
+   * Price of a ticket
+   * 
+   * @return ticketPrice
+   **/
+  @Schema(description = "Price of a ticket")
+
+  public Double getTicketPrice() {
+    return ticketPrice;
+  }
+
+  public void setTicketPrice(Double ticketPrice) {
+    this.ticketPrice = ticketPrice;
+  }
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -139,15 +166,16 @@ public class Screening   {
     }
     Screening screening = (Screening) o;
     return Objects.equals(this.id, screening.id) &&
-            Objects.equals(this.movie, screening.movie) &&
-            Objects.equals(this.room, screening.room) &&
-            Objects.equals(this.startTime, screening.startTime) &&
-            Objects.equals(this.endTime, screening.endTime);
+        Objects.equals(this.movie, screening.movie) &&
+        Objects.equals(this.room, screening.room) &&
+        Objects.equals(this.startTime, screening.startTime) &&
+        Objects.equals(this.endTime, screening.endTime) &&
+        Objects.equals(this.ticketPrice, screening.ticketPrice);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, movie, room, startTime, endTime);
+    return Objects.hash(id, movie, room, startTime, endTime, ticketPrice);
   }
 
   @Override
@@ -160,6 +188,7 @@ public class Screening   {
     sb.append("    room: ").append(toIndentedString(room)).append("\n");
     sb.append("    startTime: ").append(toIndentedString(startTime)).append("\n");
     sb.append("    endTime: ").append(toIndentedString(endTime)).append("\n");
+    sb.append("    ticketPrice: ").append(toIndentedString(ticketPrice)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -174,4 +203,9 @@ public class Screening   {
     }
     return o.toString().replace("\n", "\n    ");
   }
+
 }
+
+  
+
+    

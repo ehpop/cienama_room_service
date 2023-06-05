@@ -95,6 +95,7 @@ public class ComplaintsApiController implements ComplaintsApi {
         try {
             Integer newComplainId = complaintsDao.addComplaint(body);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<Complaint>(HttpStatus.BAD_REQUEST);
         }
 

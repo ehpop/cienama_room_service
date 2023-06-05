@@ -1,19 +1,20 @@
 package io.swagger.model;
 
+import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
-
-import java.util.Objects;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * Movie
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-06-02T08:09:53.657307486Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-06-05T18:15:23.930444515Z[GMT]")
 
-
-public class Movie   {
+public class Movie {
   @JsonProperty("id")
   private Integer id = null;
 
@@ -35,6 +36,9 @@ public class Movie   {
   @JsonProperty("description")
   private String description = null;
 
+  @JsonProperty("category")
+  private String category = null;
+
   public Movie id(Integer id) {
     this.id = id;
     return this;
@@ -42,6 +46,7 @@ public class Movie   {
 
   /**
    * Unique indetifier for a movie
+   * 
    * @return id
    **/
   @Schema(description = "Unique indetifier for a movie")
@@ -61,6 +66,7 @@ public class Movie   {
 
   /**
    * Title of the movie
+   * 
    * @return title
    **/
   @Schema(description = "Title of the movie")
@@ -80,6 +86,7 @@ public class Movie   {
 
   /**
    * Minimal age requierd to view a movie
+   * 
    * @return ageCategory
    **/
   @Schema(description = "Minimal age requierd to view a movie")
@@ -99,6 +106,7 @@ public class Movie   {
 
   /**
    * Director of the movie
+   * 
    * @return director
    **/
   @Schema(description = "Director of the movie")
@@ -118,6 +126,7 @@ public class Movie   {
 
   /**
    * Duration of the movie in minutes
+   * 
    * @return duration
    **/
   @Schema(description = "Duration of the movie in minutes")
@@ -137,6 +146,7 @@ public class Movie   {
 
   /**
    * URL to the poster of the movie
+   * 
    * @return posterUrl
    **/
   @Schema(description = "URL to the poster of the movie")
@@ -156,6 +166,7 @@ public class Movie   {
 
   /**
    * Description of the movie
+   * 
    * @return description
    **/
   @Schema(description = "Description of the movie")
@@ -168,6 +179,25 @@ public class Movie   {
     this.description = description;
   }
 
+  public Movie category(String category) {
+    this.category = category;
+    return this;
+  }
+
+  /**
+   * Category of a movie
+   * 
+   * @return category
+   **/
+  @Schema(description = "Category of a movie")
+
+  public String getCategory() {
+    return category;
+  }
+
+  public void setCategory(String category) {
+    this.category = category;
+  }
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -179,17 +209,18 @@ public class Movie   {
     }
     Movie movie = (Movie) o;
     return Objects.equals(this.id, movie.id) &&
-            Objects.equals(this.title, movie.title) &&
-            Objects.equals(this.ageCategory, movie.ageCategory) &&
-            Objects.equals(this.director, movie.director) &&
-            Objects.equals(this.duration, movie.duration) &&
-            Objects.equals(this.posterUrl, movie.posterUrl) &&
-            Objects.equals(this.description, movie.description);
+        Objects.equals(this.title, movie.title) &&
+        Objects.equals(this.ageCategory, movie.ageCategory) &&
+        Objects.equals(this.director, movie.director) &&
+        Objects.equals(this.duration, movie.duration) &&
+        Objects.equals(this.posterUrl, movie.posterUrl) &&
+        Objects.equals(this.description, movie.description) &&
+        Objects.equals(this.category, movie.category);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, ageCategory, director, duration, posterUrl, description);
+    return Objects.hash(id, title, ageCategory, director, duration, posterUrl, description, category);
   }
 
   @Override
@@ -204,6 +235,7 @@ public class Movie   {
     sb.append("    duration: ").append(toIndentedString(duration)).append("\n");
     sb.append("    posterUrl: ").append(toIndentedString(posterUrl)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -218,4 +250,9 @@ public class Movie   {
     }
     return o.toString().replace("\n", "\n    ");
   }
+
 }
+
+  
+
+    

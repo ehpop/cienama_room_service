@@ -19,10 +19,7 @@ public class UsersDaoUtils {
     public static List<User> mapToUsers(ResultSet resultSet) throws SQLException {
         List<User> list = new ArrayList<>();
         while (resultSet.next()) {
-            User user = new User();
-            user.setEmail(resultSet.getString("email"));
-            user.setJoinDate(OffsetDateTime.parse(resultSet.getString("join_date")));
-
+            User user = mapToUser(resultSet, 0);
             list.add(user);
         }
 

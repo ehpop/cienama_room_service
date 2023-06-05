@@ -16,6 +16,7 @@ public class MovieDaoUtils {
         movie.setAgeCategory(rs.getInt("age_category"));
         movie.setPosterUrl(rs.getString("poster_url"));
         movie.setDescription(rs.getString("description"));
+        movie.setCategory(rs.getString("category"));
         return movie;
     }
 

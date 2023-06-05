@@ -10,11 +10,8 @@ import java.util.List;
 public class RoomDaoUtils {
 
     public static Room mapToRoom(ResultSet resultSet, Integer id) throws SQLException {
-        Room room = new Room();
+        Room room = mapToRoomWithoutId(resultSet);
         room.setId(id);
-        room.setName(resultSet.getString("name"));
-        room.setCapacity(resultSet.getInt("capacity"));
-        room.setRows(resultSet.getInt("rows"));
 
         return room;
     }
@@ -32,11 +29,7 @@ public class RoomDaoUtils {
     public static List<Room> mapRooms(ResultSet rs) throws SQLException {
         List<Room> rooms = new ArrayList<>();
         while (rs.next()) {
-            Room room = new Room();
-            room.setId(rs.getInt("id"));
-            room.setName(rs.getString("name"));
-            room.setCapacity(rs.getInt("capacity"));
-            room.setRows(rs.getInt("rows"));
+            Room room = mapToRoomWithoutId(rs);
             rooms.add(room);
         }
         return rooms;
