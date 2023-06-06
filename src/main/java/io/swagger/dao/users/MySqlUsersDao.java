@@ -2,6 +2,7 @@ package io.swagger.dao.users;
 
 import io.swagger.model.User;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.IncorrectResultSetColumnCountException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -40,7 +41,7 @@ public class MySqlUsersDao implements UsersDao {
         User user;
         try {
             user = jdbcTemplate.queryForObject(query, UsersDaoUtils::mapToUser);
-        } catch (IncorrectResultSetColumnCountException e) {
+        } catch (IncorrectResultSetColumnCountException | EmptyResultDataAccessException e) {
             user = null;
         }
 
