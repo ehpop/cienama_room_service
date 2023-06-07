@@ -22,7 +22,7 @@ public class MySqlScreeningDao implements ScreeningDao{
     }
     @Override
     public Integer addScreening(Screening screening) {
-        String query = "INSERT INTO " + screeningTableName + "(start_time, end_time, room_id, movie_id) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO " + screeningTableName + "(start_time, end_time, room_id, movie_id, ticket_price) VALUES (?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         int rowsAffected = jdbcTemplate.update(connection -> {
@@ -31,6 +31,7 @@ public class MySqlScreeningDao implements ScreeningDao{
             ps.setString(2, screening.getEndTime().toString());
             ps.setInt(3, screening.getRoom());
             ps.setInt(4, screening.getMovie());
+            ps.setDouble(5, screening.getTicketPrice());
             return ps;
         }, keyHolder);
 

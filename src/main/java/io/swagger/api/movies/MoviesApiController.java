@@ -116,6 +116,7 @@ public class MoviesApiController implements MoviesApi {
         try {
             Integer newMoviesId = movieDao.addMovie(body);
         } catch (Exception e) {
+            System.out.println(e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

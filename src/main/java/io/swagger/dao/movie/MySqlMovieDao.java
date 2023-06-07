@@ -22,7 +22,7 @@ public class MySqlMovieDao implements MovieDao {
 
     @Override
     public Integer addMovie(Movie movie) {
-        String query = "INSERT INTO " + moviesTableName + " (title, director, duration, age_category, poster_url, description) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO " + moviesTableName + " (title, director, duration, age_category, poster_url, description, category) VALUES (?, ?, ?, ?, ?, ?, ?)";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
@@ -33,6 +33,7 @@ public class MySqlMovieDao implements MovieDao {
             ps.setInt(4, movie.getAgeCategory());
             ps.setString(5, movie.getPosterUrl());
             ps.setString(6, movie.getDescription());
+            ps.setString(7, movie.getCategory());
             return ps;
         }, keyHolder);
 
